@@ -59,11 +59,18 @@ class _ProviderLoginScreenState extends State<ProviderLoginScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  width: 80,
-                  height: 80,
+                  width: 120,
+                  height: 120,
                   decoration: BoxDecoration(
-                    color: AppColors.federalBlue,
-                    borderRadius: BorderRadius.circular(20),
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(30),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.2),
+                        blurRadius: 20,
+                        offset: const Offset(0, 10),
+                      ),
+                    ],
                   ),
                   child: Center(
                     child: Image.asset(
