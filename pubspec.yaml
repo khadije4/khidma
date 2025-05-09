@@ -1,0 +1,47 @@
+name: khidma
+description: A mobile platform connecting clients with home service providers.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  cupertino_icons: ^1.0.6
+  provider: ^6.1.1
+  http: ^1.1.0
+  shared_preferences: ^2.2.1
+  flutter_secure_storage: ^9.0.0
+  image_picker: ^1.0.4
+  flutter_svg: ^2.0.7
+  intl: ^0.19.0
+  url_launcher: ^6.1.14
+  cached_network_image: ^3.3.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.3
+  flutter_launcher_icons: ^0.13.1
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/
+    - assets/icons/
+    - assets/images/provider1.jpeg
+    - assets/images/provider2.jpeg
+    - assets/images/provider3.jpeg
+    - assets/images/provider4.jpeg
+    - assets/images/provider5.jpeg
+      # Or use this to include all images in the directory
+      # - images/
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/icons/appicon.png"
