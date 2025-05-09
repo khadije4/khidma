@@ -89,13 +89,11 @@ class ProviderCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 5),
                     Text(
-                      'Services: ${provider.services.join(", ")}',
+                      provider.service,
                       style: const TextStyle(
-                        color: Colors.grey,
-                        fontSize: 13,
+                        fontSize: 14,
+                        color: AppColors.marianBlue,
                       ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
                     ),
                     const SizedBox(height: 5),
                     Row(

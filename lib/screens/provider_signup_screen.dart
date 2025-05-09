@@ -34,7 +34,7 @@ class _ProviderSignupScreenState extends State<ProviderSignupScreen> {
     'Arabe', 'Français', 'pulaar', 'soninke','wolof','bambara'
   ];
 
-  List<String> _selectedServices = [];
+  String? _selectedService;
   List<String> _selectedLanguages = [];
   String? _selectedCity;
   bool _isObscure = true;
@@ -57,10 +57,10 @@ class _ProviderSignupScreenState extends State<ProviderSignupScreen> {
       return;
     }
 
-    if (_selectedServices.isEmpty) {
+    if (_selectedService == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Veuillez sélectionner au moins un service'),
+          content: Text('Veuillez sélectionner un service'),
           backgroundColor: AppColors.error,
         ),
       );
@@ -85,7 +85,7 @@ class _ProviderSignupScreenState extends State<ProviderSignupScreen> {
       phone: _phoneController.text.trim(),
       city: _selectedCity ?? '',
       photoUrl: 'assets/images/avatar.png', // Default placeholder
-      services: _selectedServices,
+      service: _selectedService ?? '',
       spokenLanguages: _selectedLanguages,
       servicePrice: double.tryParse(_servicePriceController.text) ?? 0.0,
       isAvailable: true,
@@ -209,33 +209,36 @@ class _ProviderSignupScreenState extends State<ProviderSignupScreen> {
                 ),
                 const SizedBox(height: 15),
                 const Text(
-                  'Services proposés',
+                  'Service proposé',
                   style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
                 const SizedBox(height: 10),
-                Wrap(
-                  spacing: 10,
-                  runSpacing: 10,
-                  children: _availableServices.map((service) {
-                    return FilterChip(
-                      label: Text(service),
-                      selected: _selectedServices.contains(service),
-                      onSelected: (selected) {
-                        setState(() {
-                          if (selected) {
-                            _selectedServices.add(service);
-                          } else {
-                            _selectedServices.remove(service);
-                          }
-                        });
-                      },
-                      selectedColor: AppColors.lightCyan,
-                      checkmarkColor: AppColors.honoluluBlue,
+                DropdownButtonFormField<String>(
+                  decoration: const InputDecoration(
+                    labelText: 'Sélectionner un service',
+                    prefixIcon: Icon(Icons.miscellaneous_services),
+                  ),
+                  value: _selectedService,
+                  items: _availableServices.map((service) {
+                    return DropdownMenuItem(
+                      value: service,
+                      child: Text(service),
                     );
                   }).toList(),
+                  onChanged: (value) {
+                    setState(() {
+                      _selectedService = value;
+                    });
+                  },
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Veuillez sélectionner un service';
+                    }
+                    return null;
+                  },
                 ),
                 const SizedBox(height: 20),
                 const Text(

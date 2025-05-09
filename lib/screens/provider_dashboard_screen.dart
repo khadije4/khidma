@@ -119,7 +119,7 @@ class _ProviderDashboardScreenState extends State<ProviderDashboardScreen> {
                             ),
                             const SizedBox(height: 4),
                             Text(
-                              provider.services.join(', '),
+                              provider.service,
                               style: const TextStyle(
                                 fontSize: 14,
                                 color: AppColors.marianBlue,
@@ -471,15 +471,15 @@ class _ProviderDashboardScreenState extends State<ProviderDashboardScreen> {
               Wrap(
                 spacing: 8,
                 runSpacing: 8,
-                children: provider.services.map((service) {
-                  return Chip(
+                children: [
+                  Chip(
                     backgroundColor: AppColors.lightCyan,
                     label: Text(
-                      service,
+                      provider.service,
                       style: const TextStyle(color: AppColors.federalBlue),
                     ),
-                  );
-                }).toList(),
+                  ),
+                ],
               ),
               _buildProfileItem(
                   Icons.monetization_on,
