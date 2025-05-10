@@ -15,6 +15,16 @@ class _ProviderLoginScreenState extends State<ProviderLoginScreen> {
   final _phoneController = TextEditingController();
   final _passwordController = TextEditingController();
   bool _isObscure = true;
+  bool _isSubmitting = false;
+
+  @override
+  void initState() {
+    super.initState();
+    // Clear any previous errors when the screen loads
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<AuthProvider>(context, listen: false).clearError();
+    });
+  }
 
   @override
   void dispose() {
@@ -28,18 +38,30 @@ class _ProviderLoginScreenState extends State<ProviderLoginScreen> {
       return;
     }
 
+    setState(() {
+      _isSubmitting = true;
+    });
+
     final auth = Provider.of<AuthProvider>(context, listen: false);
     final success = await auth.login(
       _phoneController.text.trim(),
       _passwordController.text,
     );
 
-    if (success && mounted) {
+    // Only proceed if component is still mounted
+    if (!mounted) return;
+
+    setState(() {
+      _isSubmitting = false;
+    });
+
+    if (success) {
       Navigator.of(context).pushReplacementNamed('/provider-dashboard');
-    } else if (mounted) {
+    } else {
+      // Show error from auth provider or a default message
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Échec de connexion. Vérifiez vos identifiants.'),
+        SnackBar(
+          content: Text(auth.errorMessage ?? 'Échec de connexion. Vérifiez vos identifiants.'),
           backgroundColor: AppColors.error,
         ),
       );
@@ -145,16 +167,36 @@ class _ProviderLoginScreenState extends State<ProviderLoginScreen> {
                       Align(
                         alignment: Alignment.centerRight,
                         child: TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            // You can implement password reset functionality here
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Fonctionnalité en cours de développement'),
+                              ),
+                            );
+                          },
                           child: const Text('Mot de passe oublié?'),
                         ),
                       ),
                       const SizedBox(height: 30),
+                      if (auth.errorMessage != null && auth.errorMessage!.isNotEmpty)
+                        Container(
+                          padding: const EdgeInsets.symmetric(vertical: 10),
+                          width: double.infinity,
+                          child: Text(
+                            auth.errorMessage!,
+                            style: const TextStyle(color: AppColors.error),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
                       SizedBox(
                         width: double.infinity,
                         child: ElevatedButton(
-                          onPressed: auth.isLoading ? null : _submit,
-                          child: auth.isLoading
+                          onPressed: (_isSubmitting || auth.isLoading) ? null : _submit,
+                          style: ElevatedButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(vertical: 15),
+                          ),
+                          child: (_isSubmitting || auth.isLoading)
                               ? const SizedBox(
                             height: 20,
                             width: 20,
