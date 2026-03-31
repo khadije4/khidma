@@ -137,14 +137,17 @@ class ProviderDetailScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 10),
                   Wrap(
-                    spacing: 10,
-                    runSpacing: 10,
-                    children: provider.services.map((service) {
-                      return Chip(
-                        label: Text(service),
-                        backgroundColor: AppColors.lightGrey,
-                      );
-                    }).toList(),
+                    spacing: 8,
+                    runSpacing: 8,
+                    children: [
+                      Chip(
+                        backgroundColor: AppColors.lightCyan,
+                        label: Text(
+                          provider.service,
+                          style: const TextStyle(color: AppColors.federalBlue),
+                        ),
+                      ),
+                    ],
                   ),
                   const SizedBox(height: 30),
                 ],

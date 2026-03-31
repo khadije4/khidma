@@ -6,7 +6,7 @@ class ServiceProvider {
   final String phone;
   final String city;
   final String photoUrl;
-  final List<String> services;
+  final String service;
   final List<String> spokenLanguages;
   final double servicePrice;
   final bool isAvailable;
@@ -18,7 +18,7 @@ class ServiceProvider {
     required this.phone,
     required this.city,
     required this.photoUrl,
-    required this.services,
+    required this.service,
     required this.spokenLanguages,
     required this.servicePrice,
     required this.isAvailable,

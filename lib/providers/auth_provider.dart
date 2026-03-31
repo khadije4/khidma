@@ -21,12 +21,12 @@ class AuthProvider with ChangeNotifier {
     if (phone == '123456789' && password == 'password') {
       _token = 'mock_token';
       _currentUser = ServiceProvider(
-        id: '1',
+        id: '0',
         name: 'ahmed salem',
         phone: phone,
         city: 'nouakchott',
         photoUrl: 'assets/images/avatar.png',
-        services: ['Plomberie', 'Électricité'],
+        service: 'Plomberie',
         spokenLanguages: ['Français', 'Arabe'],
         servicePrice: 300,
         isAvailable: true,
@@ -81,7 +81,7 @@ class AuthProvider with ChangeNotifier {
       phone: _currentUser!.phone,
       city: _currentUser!.city,
       photoUrl: _currentUser!.photoUrl,
-      services: _currentUser!.services,
+      service: _currentUser!.service,
       spokenLanguages: _currentUser!.spokenLanguages,
       servicePrice: _currentUser!.servicePrice,
       isAvailable: !_currentUser!.isAvailable,
